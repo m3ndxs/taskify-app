@@ -4,14 +4,11 @@ import 'package:provider/provider.dart';
 import 'package:taskify_app/config/dependencies.dart';
 import 'package:taskify_app/config/theme_manager.dart';
 import 'package:taskify_app/ui/auth/login_screen.dart';
+import 'package:taskify_app/ui/auth/view_models/auth_view_model.dart';
+import 'package:taskify_app/ui/home/widgets/home_screen.dart';
 
 void main() {
-  runApp(
-    MultiProvider(
-      providers: providersLocal,
-      child: const MainApp(),
-    ),
-  );
+  runApp(MultiProvider(providers: providersLocal, child: const MainApp()));
 }
 
 class MainApp extends StatelessWidget {
@@ -19,8 +16,8 @@ class MainApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Consumer<ThemeManager>(
-      builder: (context, themeManager, child) {
+    return Consumer2<ThemeManager, AuthViewModel>(
+      builder: (context, themeManager, authViewModel, child) {
         return MaterialApp(
           title: "Taskify",
           debugShowCheckedModeBanner: false,
@@ -32,7 +29,13 @@ class MainApp extends StatelessWidget {
           theme: themeManager.lightTheme,
           darkTheme: themeManager.darkTheme,
           themeMode: themeManager.isDarkMode ? ThemeMode.dark : ThemeMode.light,
-          home: LoginScreen(),
+          home: authViewModel.isLoggedIn
+              ? const HomeScreen()
+              : const LoginScreen(),
+          routes: {
+            "/login": (context) => const LoginScreen(),
+            "/home": (context) => const HomeScreen(),
+          }
         );
       },
     );
