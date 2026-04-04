@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:taskify_app/ui/auth/view_models/auth_view_model.dart';
+import 'package:taskify_app/ui/preferences/preferences_screen.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -50,7 +51,15 @@ class _HomeScreenState extends State<HomeScreen> {
                   'Preferências',
                   style: TextStyle(color: Colors.white),
                 ),
-                onTap: () {},
+                onTap: () {
+                  Navigator.pop(context);
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => const PreferencesScreen(),
+                    ),
+                  );
+                },
               ),
               ListTile(
                 leading: const Icon(Icons.logout, color: Colors.white),
@@ -80,6 +89,12 @@ class _HomeScreenState extends State<HomeScreen> {
           color: const Color(0xFFB6FF02),
         ),
         centerTitle: true,
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.only(
+            bottomLeft: Radius.circular(20),
+            bottomRight: Radius.circular(20),
+          )
+        ),
       ),
       body: const Center(child: Text('Tarefas')),
     );
