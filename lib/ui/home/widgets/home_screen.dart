@@ -28,11 +28,46 @@ class _HomeScreenState extends State<HomeScreen> {
               DrawerHeader(
                 decoration: const BoxDecoration(color: Colors.black),
                 child: Center(
-                  child: Image.asset(
-                    'assets/images/icon.png',
-                    height: 90,
-                    color: const Color(0xFFB6FF02),
+                  child: Consumer<AuthViewModel>(
+                    builder: (context, authViewModel, child) {
+                      return Column(
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          CircleAvatar(
+                            radius: 40.0,
+                            backgroundColor: Theme.of(
+                              context,
+                            ).colorScheme.primary,
+                            child: Text(
+                              (authViewModel.username?.substring(0, 1) ?? "U")
+                                  .toUpperCase(),
+                              style: const TextStyle(
+                                color: Colors.black,
+                                fontWeight: FontWeight.bold,
+                                fontSize: 32,
+                              ),
+                            ),
+                          ),
+
+                          const SizedBox(height: 16),
+
+                          Expanded(
+                            child: Text(
+                              authViewModel.username ?? "Usuário",
+                              style: Theme.of(context).textTheme.titleMedium,
+                            ), 
+                          ),
+                        ],
+                      );
+                    },
                   ),
+
+                  // child: Image.asset(
+                  // 'assets/images/icon.png',
+                  // height: 90,
+                  // color: const Color(0xFFB6FF02),
+                  //),
                 ),
               ),
               ListTile(
@@ -93,7 +128,7 @@ class _HomeScreenState extends State<HomeScreen> {
           borderRadius: BorderRadius.only(
             bottomLeft: Radius.circular(20),
             bottomRight: Radius.circular(20),
-          )
+          ),
         ),
       ),
       body: const Center(child: Text('Tarefas')),
