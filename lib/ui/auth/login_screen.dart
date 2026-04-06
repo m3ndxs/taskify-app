@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:taskify_app/ui/auth/view_models/auth_view_model.dart';
 
 class LoginScreen extends StatefulWidget {
@@ -15,6 +16,26 @@ class _LoginScreenState extends State<LoginScreen> {
   final _passwordController = TextEditingController();
   bool _obscurePassword = true;
   bool _isLoading = false;
+
+  final sharedPreferences = SharedPreferences.getInstance();
+
+  void create({required bool isThemeLight}) async {
+    final preferences = await sharedPreferences;
+
+    await preferences.setBool('isThemeLight', isThemeLight);
+  }
+
+  Future<bool?> getTheme() async {
+    final preferences = await sharedPreferences;
+
+    return preferences.getBool('isThemeLight');
+  }
+
+  void delete() async {
+    final preferences = await sharedPreferences;
+
+    await preferences.remove('isThemeLight');
+  }
 
   @override
   void dispose() {
@@ -88,10 +109,32 @@ class _LoginScreenState extends State<LoginScreen> {
                 mainAxisAlignment: MainAxisAlignment.center,
                 crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: [
+                  IconButton(
+                    onPressed: () {
+                      create(isThemeLight: true);
+                    },
+                    icon: Icon(Icons.save),
+                  ),
+                  IconButton(
+                    onPressed: () async {
+                      final result = await getTheme();
+
+                      print("Result: $result");
+                    },
+                    icon: Icon(Icons.search),
+                  ),
+                  IconButton(
+                    onPressed: () {
+                      delete();
+                    },
+                    icon: Icon(Icons.delete),
+                  ),
+
+
                   Image.asset('assets/images/logo.png', height: 300),
                   const SizedBox(height: 16),
                   Text(
-                    "Organize suas tarefas!",
+                    "Taskify",
                     style: Theme.of(context).textTheme.headlineMedium?.copyWith(
                       color: Theme.of(context).colorScheme.primary,
                       fontWeight: FontWeight.bold,
@@ -99,7 +142,19 @@ class _LoginScreenState extends State<LoginScreen> {
                     textAlign: TextAlign.center,
                   ),
 
-                  const SizedBox(height: 48),
+                  const SizedBox(height: 32),
+
+                  Text(
+                    "Faça o Login para continuar",
+                    style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+                      color: Theme.of(
+                        context,
+                      ).colorScheme.onSurface.withValues(alpha: 0.6),
+                    ),
+                    textAlign: TextAlign.center,
+                  ),
+
+                  const SizedBox(height: 16.0),
 
                   TextFormField(
                     controller: _emailController,
