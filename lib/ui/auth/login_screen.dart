@@ -17,26 +17,6 @@ class _LoginScreenState extends State<LoginScreen> {
   bool _obscurePassword = true;
   bool _isLoading = false;
 
-  final sharedPreferences = SharedPreferences.getInstance();
-
-  void create({required bool isThemeLight}) async {
-    final preferences = await sharedPreferences;
-
-    await preferences.setBool('isThemeLight', isThemeLight);
-  }
-
-  Future<bool?> getTheme() async {
-    final preferences = await sharedPreferences;
-
-    return preferences.getBool('isThemeLight');
-  }
-
-  void delete() async {
-    final preferences = await sharedPreferences;
-
-    await preferences.remove('isThemeLight');
-  }
-
   @override
   void dispose() {
     _emailController.dispose();
@@ -109,28 +89,6 @@ class _LoginScreenState extends State<LoginScreen> {
                 mainAxisAlignment: MainAxisAlignment.center,
                 crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: [
-                  IconButton(
-                    onPressed: () {
-                      create(isThemeLight: true);
-                    },
-                    icon: Icon(Icons.save),
-                  ),
-                  IconButton(
-                    onPressed: () async {
-                      final result = await getTheme();
-
-                      print("Result: $result");
-                    },
-                    icon: Icon(Icons.search),
-                  ),
-                  IconButton(
-                    onPressed: () {
-                      delete();
-                    },
-                    icon: Icon(Icons.delete),
-                  ),
-
-
                   Image.asset('assets/images/logo.png', height: 300),
                   const SizedBox(height: 16),
                   Text(

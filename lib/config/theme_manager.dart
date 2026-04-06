@@ -1,23 +1,37 @@
 import 'package:flutter/material.dart';
+import 'package:taskify_app/data/storage/local_storage.dart';
 
 class ThemeManager extends ChangeNotifier {
+  final String isDarkModeStorageKey = "isDarkModeStorageKey";
+
   bool _isDarkMode = true;
 
   bool get isDarkMode => _isDarkMode;
 
-  ThemeManager() {
-    _isDarkMode = true;
+  final LocalStorage localStorage;
+
+  ThemeManager({required this.localStorage}) {
+    init();
   }
 
-  void toggleTheme() {
+  void init() async {
+    final result = await localStorage.getData<bool>(key: isDarkModeStorageKey);
+    _isDarkMode = result ?? true;
+  }
+
+  void toggleTheme() async {
     _isDarkMode = !_isDarkMode;
-    // TODO: Implementar salvamento do tema se necessário
+
+    await localStorage.create(key: isDarkModeStorageKey, data: _isDarkMode);
+
     notifyListeners();
   }
 
-  void setTheme(bool isDarkMode) {
+  Future<void> setTheme(bool isDarkMode) async {
     _isDarkMode = isDarkMode;
-    // TODO: Implementar salvamento do tema se necessário
+    
+    await localStorage.create(key: isDarkModeStorageKey, data: _isDarkMode);
+    
     notifyListeners();
   }
 
@@ -72,9 +86,7 @@ class ThemeManager extends ChangeNotifier {
           backgroundColor: const Color(0xFFB6FF02),
           foregroundColor: Colors.black,
           padding: const EdgeInsets.symmetric(vertical: 16),
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(8),
-          ),
+          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
         ),
       ),
       useMaterial3: true,
@@ -133,9 +145,7 @@ class ThemeManager extends ChangeNotifier {
           backgroundColor: const Color(0xFFB6FF02),
           foregroundColor: Colors.black,
           padding: const EdgeInsets.symmetric(vertical: 16),
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(8),
-          ),
+          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
         ),
       ),
       useMaterial3: true,

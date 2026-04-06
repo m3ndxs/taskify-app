@@ -62,12 +62,6 @@ class _HomeScreenState extends State<HomeScreen> {
                       );
                     },
                   ),
-
-                  // child: Image.asset(
-                  // 'assets/images/icon.png',
-                  // height: 90,
-                  // color: const Color(0xFFB6FF02),
-                  //),
                 ),
               ),
               ListTile(
