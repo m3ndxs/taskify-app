@@ -1,3 +1,5 @@
+import 'package:taskify_app/data/storage/local_storage.dart';
+
 abstract class AuthRepository {
   Future<bool> isLoggedIn();
   Future<String?> getUsername();
@@ -7,16 +9,29 @@ abstract class AuthRepository {
 }
 
 class MockAuthRepository implements AuthRepository {
+  final LocalStorage localStorage;
+
+  MockAuthRepository({required this.localStorage});
+
+  final String isLoggedStorageKey = 'isLoggedKey';
+  final String usernameStorageKey = 'usernameKey';
+
   bool _isLoggedIn = false;
   String? _username;
   
   @override
   Future<String?> getUsername() async {
+    final result = await localStorage.getData(key: usernameStorageKey);
+    _username = result;
+    
     return _username;
   }
   
   @override
   Future<bool> isLoggedIn() async {
+    final result = await localStorage.getData(key: isLoggedStorageKey);
+    _isLoggedIn = result == 'true';
+
     return _isLoggedIn;
   }
   
@@ -43,6 +58,9 @@ class MockAuthRepository implements AuthRepository {
   
   @override
   Future<void> saveAuthState(bool isLoggedIn, String? username) async {
+    await localStorage.create(key: isLoggedStorageKey, data: isLoggedIn);
+    await localStorage.create(key: usernameStorageKey, data: username);
+    
     _isLoggedIn = isLoggedIn;
     _username = username;
   }

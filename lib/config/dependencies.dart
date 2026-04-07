@@ -2,6 +2,7 @@ import 'package:provider/provider.dart';
 import 'package:provider/single_child_widget.dart';
 import 'package:taskify_app/config/theme_manager.dart';
 import 'package:taskify_app/data/repositories/auth_repository.dart';
+import 'package:taskify_app/data/storage/local_secure_storage.dart';
 import 'package:taskify_app/data/storage/local_storage.dart';
 import 'package:taskify_app/data/storage/shared_preferences_storage.dart';
 import 'package:taskify_app/domain/use_cases/auth/check_auth_state_use_case.dart';
@@ -14,7 +15,7 @@ List<SingleChildWidget> get providersLocal {
   return [
     Provider<LocalStorage>(create: (context) => SharedPreferencesStorage()),
     ChangeNotifierProvider<ThemeManager>(create: (context) => ThemeManager(localStorage: context.read<LocalStorage>())),
-    Provider<AuthRepository>(create: (context) => MockAuthRepository()),
+    Provider<AuthRepository>(create: (context) => MockAuthRepository(localStorage: LocalSecureStorage())),
 
     Provider<CheckAuthStateUseCase>(
       lazy: true,
