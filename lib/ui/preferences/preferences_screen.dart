@@ -159,27 +159,23 @@ class PreferencesScreen extends StatelessWidget {
 
                             const SizedBox(width: 16.0),
 
-                            Expanded(
-                              child: Column(
-                                children: [
-                                  Text(
-                                    authViewModel.username ?? "Usuário",
-                                    style: Theme.of(
-                                      context,
-                                    ).textTheme.titleMedium,
-                                  ),
-                                  Text(
-                                    "Logado",
-                                    style: Theme.of(context)
-                                        .textTheme
-                                        .bodyMedium
-                                        ?.copyWith(
-                                          color: Colors.green,
-                                          fontWeight: FontWeight.w500,
-                                        ),
-                                  ),
-                                ],
-                              ),
+                            Column(
+                              children: [
+                                Text(
+                                  authViewModel.username ?? "Usuário",
+                                  style: Theme.of(
+                                    context,
+                                  ).textTheme.titleMedium,
+                                ),
+                                Text(
+                                  "Logado",
+                                  style: Theme.of(context).textTheme.bodyMedium
+                                      ?.copyWith(
+                                        color: Colors.green,
+                                        fontWeight: FontWeight.w500,
+                                      ),
+                                ),
+                              ],
                             ),
                           ],
                         );

@@ -40,7 +40,6 @@ class AuthViewModel extends ChangeNotifier {
         _username = await _getUsernameUseCase.execute();
       }
     } catch (e) {
-      // Em caso de erro, assume que não está logado
       _isLoggedIn = false;
       _username = null;
     } finally {

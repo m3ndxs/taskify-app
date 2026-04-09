@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 import 'package:taskify_app/ui/auth/view_models/auth_view_model.dart';
 
 class LoginScreen extends StatefulWidget {
@@ -44,7 +43,6 @@ class _LoginScreenState extends State<LoginScreen> {
                 backgroundColor: Colors.green,
               ),
             );
-            // Navegar para a tela principal
             Navigator.of(context).pushReplacementNamed('/home');
           }
         } else {

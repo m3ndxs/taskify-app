@@ -13,25 +13,31 @@ class MockAuthRepository implements AuthRepository {
 
   MockAuthRepository({required this.localStorage});
 
-  final String isLoggedStorageKey = 'isLoggedKey';
-  final String usernameStorageKey = 'usernameKey';
+  static const String isLoggedStorageKey = 'taskify.v1.is_logged_in';
+  static const String usernameStorageKey = 'taskify.v1.username';
 
   bool _isLoggedIn = false;
   String? _username;
   
   @override
   Future<String?> getUsername() async {
-    final result = await localStorage.getData(key: usernameStorageKey);
+    final result = await localStorage.getData<String>(key: usernameStorageKey);
+    if (result == null || result.isEmpty || result == 'null') {
+      _username = null;
+      return null;
+    }
     _username = result;
-    
     return _username;
   }
-  
+
   @override
   Future<bool> isLoggedIn() async {
-    final result = await localStorage.getData(key: isLoggedStorageKey);
-    _isLoggedIn = result == 'true';
-
+    final raw = await localStorage.getData<String>(key: isLoggedStorageKey);
+    if (raw == null || raw.isEmpty) {
+      _isLoggedIn = false;
+      return false;
+    }
+    _isLoggedIn = raw.trim().toLowerCase() == 'true';
     return _isLoggedIn;
   }
   
@@ -50,10 +56,11 @@ class MockAuthRepository implements AuthRepository {
   
   @override
   Future<void> logout() async {
-    _isLoggedIn = true;
+    _isLoggedIn = false;
     _username = null;
 
-    await saveAuthState(_isLoggedIn, _username);
+    await localStorage.delete(key: isLoggedStorageKey);
+    await localStorage.delete(key: usernameStorageKey);
   }
   
   @override
