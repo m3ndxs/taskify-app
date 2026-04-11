@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:taskify_app/ui/auth/view_models/auth_view_model.dart';
+import 'package:taskify_app/ui/home/widgets/task_card_widget.dart';
 import 'package:taskify_app/ui/preferences/preferences_screen.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -56,7 +57,7 @@ class _HomeScreenState extends State<HomeScreen> {
                             child: Text(
                               authViewModel.username ?? "Usuário",
                               style: Theme.of(context).textTheme.titleMedium,
-                            ), 
+                            ),
                           ),
                         ],
                       );
@@ -125,7 +126,11 @@ class _HomeScreenState extends State<HomeScreen> {
           ),
         ),
       ),
-      body: const Center(child: Text('Tarefas')),
+      body: const Center(child: TaskCard()),
+      floatingActionButton: FloatingActionButton(
+        child: Icon(Icons.add, size: 30),
+        onPressed: () {},
+      ),
     );
   }
 }
