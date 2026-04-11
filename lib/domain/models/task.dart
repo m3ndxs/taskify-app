@@ -1,11 +1,12 @@
 import 'package:taskify_app/domain/models/enum/task_priority.dart';
 
 class Task {
-  final int? id;
+  final String? id;
   final String title;
   final String description;
   final DateTime createdAt;
   final TaskPriority taskPriority;
+  bool isDone;
 
   Task({
     this.id,
@@ -13,6 +14,7 @@ class Task {
     required this.description,
     required this.createdAt,
     required this.taskPriority,
+    this.isDone = false,
   });
 
   String get formattedDate {

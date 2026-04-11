@@ -1,18 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:taskify_app/domain/models/enum/task_priority.dart';
 import 'package:taskify_app/domain/models/task.dart';
+import 'package:taskify_app/providers/task_provider.dart';
 
 class TaskCard extends StatelessWidget {
-  // final Task task;
-  // final VoidCallback onEdit;
-  // final VoidCallback onDelete;
+  final Task task;
 
-  const TaskCard({
-    super.key,
-    // required this.task,
-    // required this.onEdit,
-    // required this.onDelete,
-  });
+  const TaskCard({super.key, required this.task});
 
   Color getPriorityColor(TaskPriority taskPriority) {
     switch (taskPriority) {
@@ -38,8 +33,9 @@ class TaskCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final provider = context.read<TaskProvider>();
+
     return SizedBox(
-      height: 130,
       child: Stack(
         children: [
           Card(
@@ -52,6 +48,12 @@ class TaskCard extends StatelessWidget {
               padding: const EdgeInsets.all(16.0),
               child: Row(
                 children: [
+                  Checkbox(
+                    value: task.isDone,
+                    onChanged: (_) {
+                      provider.toggleTask(task.id!);
+                    },
+                  ),
                   Icon(
                     Icons.task_outlined,
                     size: 56,
@@ -64,28 +66,31 @@ class TaskCard extends StatelessWidget {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text(
-                          "Titulo task",
+                          task.title,
                           style: Theme.of(context).textTheme.headlineSmall
                               ?.copyWith(
                                 color: Theme.of(context).colorScheme.primary,
                                 fontWeight: FontWeight.bold,
+                                decoration: task.isDone
+                                    ? TextDecoration.lineThrough
+                                    : null,
                               ),
                         ),
                         SizedBox(height: 3),
                         Text(
-                          "Descrição da tarefa que deve ser feita hoje",
+                          task.description,
                           style: Theme.of(context).textTheme.bodyMedium
                               ?.copyWith(
                                 color: Theme.of(
                                   context,
                                 ).colorScheme.onSurface.withValues(alpha: 0.6),
                               ),
-                          maxLines: 1,
+                          maxLines: 3,
                           overflow: TextOverflow.ellipsis,
                         ),
                         SizedBox(height: 3),
                         Text(
-                          "Aqui vem a data de criação da task",
+                          task.formattedDate,
                           style: Theme.of(context).textTheme.bodySmall
                               ?.copyWith(
                                 color: Theme.of(
@@ -96,22 +101,28 @@ class TaskCard extends StatelessWidget {
                       ],
                     ),
                   ),
+                  IconButton(
+                    icon: const Icon(Icons.delete, color: Colors.red),
+                    onPressed: () {
+                      provider.removeTask(task.id!);
+                    },
+                  ),
                 ],
               ),
             ),
           ),
 
           Positioned(
-            top: 24,
+            top: 16,
             right: 16,
             child: Container(
               padding: EdgeInsets.symmetric(vertical: 4, horizontal: 8),
               decoration: BoxDecoration(
-                color: getPriorityColor(TaskPriority.alta),
+                color: getPriorityColor(task.taskPriority),
                 borderRadius: BorderRadius.circular(8),
               ),
               child: Text(
-                getPriorityText(TaskPriority.alta),
+                getPriorityText(task.taskPriority),
                 style: TextStyle(fontSize: 12, fontWeight: FontWeight.bold),
               ),
             ),

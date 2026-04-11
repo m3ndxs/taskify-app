@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:taskify_app/ui/auth/view_models/auth_view_model.dart';
 import 'package:taskify_app/ui/home/widgets/task_card_widget.dart';
+import 'package:taskify_app/ui/home/widgets/task_form.dart';
+import 'package:taskify_app/ui/home/widgets/task_list.dart';
 import 'package:taskify_app/ui/preferences/preferences_screen.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -56,7 +58,9 @@ class _HomeScreenState extends State<HomeScreen> {
                           Expanded(
                             child: Text(
                               authViewModel.username ?? "Usuário",
-                              style: Theme.of(context).textTheme.titleMedium,
+                              style: Theme.of(context).textTheme.titleMedium?.copyWith(
+                                color: Colors.grey,
+                              ),
                             ),
                           ),
                         ],
@@ -126,10 +130,18 @@ class _HomeScreenState extends State<HomeScreen> {
           ),
         ),
       ),
-      body: const Center(child: TaskCard()),
+      body: const SafeArea(child: TaskList()),
       floatingActionButton: FloatingActionButton(
         child: Icon(Icons.add, size: 30),
-        onPressed: () {},
+        onPressed: () {
+          showModalBottomSheet(
+            context: context, 
+            isScrollControlled: true,
+            builder: (context) {
+              return const TaskForm();
+            },
+          );
+        },
       ),
     );
   }

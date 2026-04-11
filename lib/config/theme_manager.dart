@@ -41,8 +41,8 @@ class ThemeManager extends ChangeNotifier {
       fontFamily: 'prompt',
       textTheme: const TextTheme(),
       colorScheme: ColorScheme.fromSeed(
-        seedColor: const Color(0xFFB6FF02),
-        primary: const Color(0xFFB6FF02),
+        seedColor: const Color.fromARGB(255, 138, 161, 79),
+        primary: const Color.fromARGB(255, 138, 161, 79),
         secondary: Colors.black,
         brightness: Brightness.light,
       ),
@@ -52,7 +52,7 @@ class ThemeManager extends ChangeNotifier {
         centerTitle: true,
         iconTheme: IconThemeData(color: Colors.black),
         titleTextStyle: TextStyle(
-          color: Color(0xFFB6FF02),
+          color: Color.fromARGB(255, 138, 161, 79),
           fontSize: 20,
           fontWeight: FontWeight.bold,
         ),
@@ -70,7 +70,7 @@ class ThemeManager extends ChangeNotifier {
         ),
         focusedBorder: OutlineInputBorder(
           borderRadius: BorderRadius.circular(16),
-          borderSide: const BorderSide(color: Color(0xFFB6FF02)),
+          borderSide: const BorderSide(color: Color.fromARGB(255, 138, 161, 79)),
         ),
         errorBorder: OutlineInputBorder(
           borderRadius: BorderRadius.circular(16),
@@ -83,7 +83,7 @@ class ThemeManager extends ChangeNotifier {
       ),
       elevatedButtonTheme: ElevatedButtonThemeData(
         style: ElevatedButton.styleFrom(
-          backgroundColor: const Color(0xFFB6FF02),
+          backgroundColor: const Color.fromARGB(255, 138, 161, 79),
           foregroundColor: Colors.black,
           padding: const EdgeInsets.symmetric(vertical: 16),
           shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
