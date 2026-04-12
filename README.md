@@ -1,17 +1,51 @@
-# taskify_app
+# Taskify App
 
-A new Flutter project.
+Um aplicativo de lista de tarefas desenvolvido com Flutter.
+Permite criar, editar, excluir e gerenciar tarefas localmente.
 
-## Getting Started
+## 🚀 Tecnologias utilizadas
 
-This project is a starting point for a Flutter application.
+- Flutter
+- Dart
+- Provider (gerenciamento de estado)
+- SharedPreferences (armazenamento local)
 
-A few resources to get you started if this is your first Flutter project:
+## 📱 Tecnologias utilizadas
 
-- [Learn Flutter](https://docs.flutter.dev/get-started/learn-flutter)
-- [Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Flutter learning resources](https://docs.flutter.dev/reference/learning-resources)
+- 📱 Funcionalidades
+- ✅ Adicionar tarefas
+- ✏️ Editar tarefas
+- ❌ Excluir tarefas
+- 📌 Definir prioridade (Alta, Média, Baixa)
+- ✔️ Marcar tarefa como concluída
 
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+## ▶️ Como Rodar o Projeto
+
+## Pré-requisitos
+- Flutter instalado
+- Emulador ou dispositivo físico
+
+## Passos
+
+### Clone o repositório
+
+```
+git clone https://github.com/m3ndxs/taskify-app.git
+```
+
+### Acesse a pasta do projeto
+
+```
+cd taskify_app
+```
+
+### Instale as dependências
+
+```
+flutter pub get
+```
+### Execute o app
+
+```
+flutter run
+```
